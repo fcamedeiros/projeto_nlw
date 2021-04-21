@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import { getCustomRepository } from "typeorm";
-import { SettingsRepository } from "../repositories/SettingsRepository";
+import { SettingsService } from "../services/SettingsService";
 
 class SettingsController {
 
@@ -8,16 +7,21 @@ class SettingsController {
 
     const { chat, username } = request.body;
 
-    const settingsRespository = getCustomRepository(SettingsRepository);
+    const settingsService = new SettingsService();
 
-    const settings = settingsRespository.create({
-      chat,
-      username
-    });
+    try {
 
-    await settingsRespository.save(settings);
+      const settings = await settingsService.create({ chat, username });
 
-    return response.json(settings);
+      return response.json(settings);
+
+    } catch (error) {
+
+      return response.status(400).json({
+        message: error.message,
+      });
+
+    }
 
   }
 
