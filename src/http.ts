@@ -26,9 +26,14 @@ app.set("views", path.join(__dirname, "..", "public"));
 app.engine("html", require("ejs").renderFile);
 app.set("view engine", "html");
 
-// criando uma rota de teste para executar a pagina de suporte
+// criando uma rota de teste para executar a pagina de suporte (cliente)
 app.get("/pages/client", (request, response) => {
   return response.render("html/client.html");
+});
+
+// criando uma rota de teste para executar a pagina de suporte (admin)
+app.get("/pages/admin", (request, response) => {
+  return response.render("html/admin.html");
 });
 
 // cria o protocolo http
